@@ -1,18 +1,11 @@
 import React from 'react';
 
-import Head from 'next/head';
+import Layout from '../components/layout/Layout';
 
 export default function Home() {
   return (
-    <div>
-      <Head>
-        <title>Super App #19 🎇</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <div>
-        Hello there!
-      </div>
-    </div>
+    <Layout>
+      <div>Hello there!</div>
+    </Layout>
   );
 }

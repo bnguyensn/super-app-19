@@ -7,8 +7,23 @@
   src: local(Quicksand), url(/fonts/Quicksand-Regular.ttf) format("truetype");
 }
 
+@font-face {
+  font-family: Bubblegum Sans;
+  src: local(Bubblegum Sans), url(/fonts/BubblegumSans-Regular.ttf) format("truetype");
+}
+
 * {
   box-sizing: border-box;
+}
+
+html {
+  @apply text-gray-900
+}
+
+@screen md {
+  html {
+    font-size: 20px;
+  }
 }
 
 h1 {

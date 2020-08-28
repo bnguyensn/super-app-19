@@ -4,7 +4,7 @@ import Link from 'next/link';
 const NavLinkDesktop = ({ href, children }) => {
   return (
     <Link href={href}>
-      <a className="m-4 no-underline">{children}</a>
+      <a className="mx-4 no-underline">{children}</a>
     </Link>
   );
 };
@@ -12,7 +12,9 @@ const NavLinkDesktop = ({ href, children }) => {
 export default function Header() {
   return (
     <header>
-      <nav className="flex items-center">
+      <nav className="mx-auto flex items-center p-4 max-w-screen-lg">
+        <h4 className="font-display flex-grow text-pink-600">Super App #19</h4>
+
         <NavLinkDesktop href="/">Home</NavLinkDesktop>
         <NavLinkDesktop href="/about">About</NavLinkDesktop>
       </nav>

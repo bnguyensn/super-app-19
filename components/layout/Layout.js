@@ -12,8 +12,10 @@ export default function Layout({ title = 'Super App #19 🎇', children }) {
         <link rel="icon" href="/images/favicon.ico" />
       </Head>
 
-      <Header />
-      <main>{children}</main>
+      <div className="min-h-screen">
+        <Header />
+        <main>{children}</main>
+      </div>
       <Footer />
     </div>
   );

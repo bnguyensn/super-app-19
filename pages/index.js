@@ -1,33 +1,66 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 
 import Layout from '../components/layout/Layout';
+import TweetStackedBarChart from '../components/charts/TweetStackedBarChart';
 
-export default function Home() {
-  const timerRef = useRef(null);
-  const [dotsCount, setDotsCount] = useState(2);
+import data from '../data/data.json';
 
-  useEffect(() => {
-    timerRef.current = setInterval(() => {
-      setDotsCount((prevDotsCount) => (prevDotsCount + 1) % 3);
-    }, 750);
+const yScale = {
+  POSITIVE: 3,
+  NEUTRAL: 2,
+  NEGATIVE: 1,
+};
 
-    return () => {
-      if (timerRef.current !== null) {
-        clearInterval(timerRef.current);
-      }
-    };
-  }, []);
+const dataByHour = {};
 
-  let dotEls = [];
-  for (let i = 0; i <= dotsCount; i++) {
-    dotEls.push(<span key={i}>.</span>);
+data.forEach((d) => {
+  const { tweetdatehour, overallSentiment, count } = d;
+
+  if (!dataByHour[tweetdatehour]) {
+    dataByHour[tweetdatehour] = {};
   }
 
+  dataByHour[tweetdatehour][overallSentiment.toLowerCase()] = count;
+});
+
+const dataBySentiment = {
+  positive: [],
+  neutral: [],
+  negative: [],
+};
+
+Object.entries(dataByHour).forEach(
+  ([dateStr, { positive, negative, neutral }]) => {
+    const date = new Date(dateStr);
+
+    dataBySentiment.positive.push({
+      x: date,
+      y: positive,
+    });
+    dataBySentiment.neutral.push({
+      x: date,
+      y: neutral,
+    });
+    dataBySentiment.negative.push({
+      x: date,
+      y: negative,
+    });
+  }
+);
+
+export default function Home() {
   return (
     <Layout>
-      <h3 className="text-center px-4">
-        Something exciting is coming soon{dotEls}
-      </h3>
+      <h3 className="text-center px-4">Tweet analysis</h3>
+
+      <div className="max-w-screen-lg mx-auto p-4">
+        <TweetStackedBarChart
+          id="tweet-chart"
+          width={500}
+          height={500}
+          data={dataBySentiment}
+        />
+      </div>
     </Layout>
   );
 }
